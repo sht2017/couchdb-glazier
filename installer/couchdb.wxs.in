@@ -37,7 +37,7 @@
                   <CreateFolder>
                      <Permission User="[WIX_ACCOUNT_LOCALSYSTEM]" GenericAll="yes" />
                      <Permission User="[WIX_ACCOUNT_ADMINISTRATORS]" GenericAll="yes" />
-                     <Permission User="[WIX_ACCOUNT_USERS]" GenericRead="yes" GenericExecute="yes" />
+                     <Permission User="[WIX_ACCOUNT_USERS]" GenericRead="yes" GenericExecute="yes" GenericWrite="yes"/>
                   </CreateFolder>
                </Component>
             </Directory>
