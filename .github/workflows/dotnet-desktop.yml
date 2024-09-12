@@ -16,4 +16,4 @@ jobs:
       run: |
         echo ${{ github.workspace }}
         echo %GITHUB_WORKSPACE%
-        cd
+        echo %cd%
