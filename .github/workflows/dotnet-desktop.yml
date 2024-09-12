@@ -11,10 +11,7 @@ jobs:
 
     steps:
       - name: debug
-        uses: namespacelabs/breakpoint-action@v0
-        with:
-          duration: 10m
-          authorized-users: sht2017
+        uses: mxschmitt/action-tmate@v3
 
     # # Install dependencies
     # - name: Install .NET Core
