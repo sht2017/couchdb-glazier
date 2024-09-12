@@ -45,6 +45,12 @@ jobs:
         &./configure.ps1 -SpiderMonkeyVersion 91
         make -f Makefile.win
       shell: powershell
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-output
+        path: /c/relax/couchdb/bin
   
     # - name: debug
     #   uses: mxschmitt/action-tmate@v3
