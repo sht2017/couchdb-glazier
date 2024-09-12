@@ -15,5 +15,5 @@ jobs:
     - name: Install .NET Core
       run: |
         echo ${{ github.workspace }}
-        echo %GITHUB_WORKSPACE%
-        echo %cd%
+        echo $GITHUB_WORKSPACE
+        echo $pwd
