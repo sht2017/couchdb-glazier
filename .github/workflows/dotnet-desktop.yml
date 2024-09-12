@@ -45,12 +45,30 @@ jobs:
         &./configure.ps1 -SpiderMonkeyVersion 91
         make -f Makefile.win
       shell: powershell
+      
+    - name: Test
+      run: |
+        &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
+        cd $env:WORK_PATH/couchdb
+        &.\configure.ps1 -SpiderMonkeyVersion 91
+        make -f Makefile.win check
+      shell: powershell
+      
+    - name: Build Installer
+      run: |
+        &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
+        cd $env:WORK_PATH/couchdb
+        &.\configure.ps1 -SpiderMonkeyVersion 91
+        make -f Makefile.win release
+        cd $env:WORK_PATH
+        &couchdb-glazier\bin\build_installer.ps1
+      shell: powershell
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4
       with:
         name: build-output
-        path: /c/relax/couchdb/bin
+        path: $env:WORK_PATH
         compression-level: 0
         overwrite: true
     
