@@ -25,7 +25,7 @@ jobs:
         git config --global core.autocrlf false
         git clone https://github.com/apache/couchdb-glazier
         &./couchdb-glazier/bin/install_dependencies.ps1
-      shell: pwsh
+      shell: powershell
       
     - name: Build
       run: |
@@ -38,7 +38,7 @@ jobs:
         }
         &./configure.ps1 -SpiderMonkeyVersion 91
         make -f Makefile.win
-      shell: pwsh
+      shell: powershell
   
     - name: debug
       uses: mxschmitt/action-tmate@v3
