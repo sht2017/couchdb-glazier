@@ -13,5 +13,5 @@ jobs:
 
     # Install dependencies
     - name: Install .NET Core
-    - run: |
+      run: |
         echo ${{ github.workspace }}
