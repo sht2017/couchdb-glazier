@@ -11,18 +11,14 @@ jobs:
     runs-on: windows-latest 
 
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
     
-      - name: debug
-        uses: mxschmitt/action-tmate@v3
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    # # Install dependencies
-    # - name: Install .NET Core
-    #   run: |
-    #     echo ${{ github.workspace }}
-    #     echo $GITHUB_WORKSPACE
-    #     echo $pwd
+    - name: Install Dependencies
+      run: powershell ./bin/install_dependencies.ps1
+  
+    - name: debug
+      uses: mxschmitt/action-tmate@v3
