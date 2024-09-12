@@ -14,30 +14,31 @@ jobs:
   build:
     runs-on: windows-latest 
     env:
-      WORK_PATH: "C:\relax"
+      WORK_PATH: "C:/relax"
     steps:
 
     - name: Setup Dependencies
       run: |
+        mkdir $env:WORK_PATH
         cd $env:WORK_PATH
         Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
         choco feature enable -n allowGlobalConfirmation
         choco install git
         git config --global core.autocrlf false
         git clone https://github.com/apache/couchdb-glazier
-        &.\couchdb-glazier\bin\install_dependencies.ps1
+        &./couchdb-glazier/bin/install_dependencies.ps1
       shell: pwsh
       
     - name: Build
       run: |
-        &$env:WORK_PATH\couchdb-glazier\bin\shell.ps1
+        &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
         cd $env:WORK_PATH
         git clone https://github.com/apache/couchdb
         cd couchdb
         if ("${{ github.event.inputs.branch_or_tag }}" -ne "") {
           git checkout ${{ github.event.inputs.branch_or_tag }}
         }
-        &.\configure.ps1 -SpiderMonkeyVersion 91
+        &./configure.ps1 -SpiderMonkeyVersion 91
         make -f Makefile.win
       shell: pwsh
   
