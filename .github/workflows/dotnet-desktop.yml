@@ -17,10 +17,10 @@ jobs:
       WORK_PATH: "C:/relax"
     steps:
     
-    - name: Remove old artifacts
-      uses: c-hive/gha-remove-artifacts@v1
-      with:
-        age: '1 seconds'
+    # - name: Remove old artifacts
+    #   uses: c-hive/gha-remove-artifacts@v1
+    #   with:
+    #     age: '1 seconds'
 
 
     - name: Setup Dependencies
@@ -47,10 +47,13 @@ jobs:
       shell: powershell
 
     - name: Archive production artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: build-output
         path: /c/relax/couchdb/bin
+        compression-level: 0
+        overwrite: true
+    
   
     # - name: debug
     #   uses: mxschmitt/action-tmate@v3
