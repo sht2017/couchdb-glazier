@@ -1,0 +1,17 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: windows-latest 
+
+    steps:
+
+    # Install dependencies
+    - name: Install .NET Core
+    - run: |
+        echo ${{ github.workspace }}
