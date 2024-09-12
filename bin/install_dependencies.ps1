@@ -35,7 +35,7 @@ choco install python --version=3.11.9
 choco install archiver --version=3.1.0
 choco install msys2 --version=20240727.0.0
 
-Install-PackageProvider -Name NuGet -Force
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module VSSetup -Scope CurrentUser -Force
 
 # Explicit workaround that refresnenv is working for this powershell shell
