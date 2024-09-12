@@ -19,27 +19,26 @@ jobs:
 
     - name: Setup Dependencies
       run: |
-        Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-        # mkdir $env:WORK_PATH
-        # cd $env:WORK_PATH
-        # choco feature enable -n allowGlobalConfirmation
-        # git config --global core.autocrlf false
-        # git clone https://github.com/apache/couchdb-glazier
-        # &./couchdb-glazier/bin/install_dependencies.ps1
+        mkdir $env:WORK_PATH
+        cd $env:WORK_PATH
+        choco feature enable -n allowGlobalConfirmation
+        git config --global core.autocrlf false
+        git clone https://github.com/apache/couchdb-glazier
+        &./couchdb-glazier/bin/install_dependencies.ps1
       shell: powershell
       
-    # - name: Build
-    #   run: |
-    #     &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
-    #     cd $env:WORK_PATH
-    #     git clone https://github.com/apache/couchdb
-    #     cd couchdb
-    #     if ("${{ github.event.inputs.branch_or_tag }}" -ne "") {
-    #       git checkout ${{ github.event.inputs.branch_or_tag }}
-    #     }
-    #     &./configure.ps1 -SpiderMonkeyVersion 91
-    #     make -f Makefile.win
-    #   shell: powershell
+    - name: Build
+      run: |
+        &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
+        cd $env:WORK_PATH
+        git clone https://github.com/apache/couchdb
+        cd couchdb
+        if ("${{ github.event.inputs.branch_or_tag }}" -ne "") {
+          git checkout ${{ github.event.inputs.branch_or_tag }}
+        }
+        &./configure.ps1 -SpiderMonkeyVersion 91
+        make -f Makefile.win
+      shell: powershell
   
-    # - name: debug
-    #   uses: mxschmitt/action-tmate@v3
+    - name: debug
+      uses: mxschmitt/action-tmate@v3
