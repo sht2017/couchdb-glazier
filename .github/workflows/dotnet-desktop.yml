@@ -46,5 +46,5 @@ jobs:
         make -f Makefile.win
       shell: powershell
   
-    - name: debug
-      uses: mxschmitt/action-tmate@v3
+    # - name: debug
+    #   uses: mxschmitt/action-tmate@v3
