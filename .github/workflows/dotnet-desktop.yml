@@ -30,6 +30,7 @@ jobs:
         choco feature enable -n allowGlobalConfirmation
         git config --global core.autocrlf false
         git clone https://github.com/apache/couchdb-glazier
+        choco install sphinx
         &./couchdb-glazier/bin/install_dependencies.ps1
       shell: powershell
       
