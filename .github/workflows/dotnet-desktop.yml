@@ -36,12 +36,17 @@ jobs:
           git checkout ${{ github.event.inputs.branch_or_tag }}
         }
         &./configure.ps1 -SpiderMonkeyVersion 91
+        function sphinx-build {
+          python -m sphinx.cmd.build $args
+        }
         make -f Makefile.win
+        
         # Test
         &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
         cd $env:WORK_PATH/couchdb
         &.\configure.ps1 -SpiderMonkeyVersion 91
         make -f Makefile.win check
+        
         # Release
         make -f Makefile.win release
         cd $env:WORK_PATH
