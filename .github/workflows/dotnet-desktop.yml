@@ -16,12 +16,6 @@ jobs:
     env:
       WORK_PATH: "C:/relax"
     steps:
-    
-    # - name: Remove old artifacts
-    #   uses: c-hive/gha-remove-artifacts@v1
-    #   with:
-    #     age: '1 seconds'
-
 
     - name: Setup Dependencies
       run: |
@@ -30,7 +24,6 @@ jobs:
         choco feature enable -n allowGlobalConfirmation
         git config --global core.autocrlf false
         git clone https://github.com/apache/couchdb-glazier
-        choco install sphinx
         &./couchdb-glazier/bin/install_dependencies.ps1
       shell: powershell
       
@@ -44,6 +37,9 @@ jobs:
           git checkout ${{ github.event.inputs.branch_or_tag }}
         }
         &./configure.ps1 -SpiderMonkeyVersion 91
+        function sphinx-build {
+            python -m sphinx.cmd.build $args
+        }
         make -f Makefile.win
       shell: powershell
       
