@@ -24,21 +24,8 @@ jobs:
         choco feature enable -n allowGlobalConfirmation
         git config --global core.autocrlf false
         git clone https://github.com/apache/couchdb-glazier
-        # &./couchdb-glazier/bin/install_dependencies.ps1
+        &./couchdb-glazier/bin/install_dependencies.ps1
       shell: powershell
-      
-    - name: debug
-      uses: mxschmitt/action-tmate@v3
-
-    # - name: Setup Dependencies
-    #   run: |
-    #     mkdir $env:WORK_PATH
-    #     cd $env:WORK_PATH
-    #     choco feature enable -n allowGlobalConfirmation
-    #     git config --global core.autocrlf false
-    #     git clone https://github.com/apache/couchdb-glazier
-    #     &./couchdb-glazier/bin/install_dependencies.ps1
-    #   shell: powershell
       
     - name: Build
       run: |
@@ -54,25 +41,58 @@ jobs:
             python -m sphinx.cmd.build $args
         }
         make -f Makefile.win
-      shell: powershell
-      
-    - name: Test
-      run: |
         &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
         cd $env:WORK_PATH/couchdb
         &.\configure.ps1 -SpiderMonkeyVersion 91
         make -f Makefile.win check
-      shell: powershell
-      
-    - name: Build Installer
-      run: |
-        &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
-        cd $env:WORK_PATH/couchdb
-        &.\configure.ps1 -SpiderMonkeyVersion 91
         make -f Makefile.win release
         cd $env:WORK_PATH
         &couchdb-glazier\bin\build_installer.ps1
       shell: powershell
+
+    # - name: Setup Dependencies
+    #   run: |
+    #     mkdir $env:WORK_PATH
+    #     cd $env:WORK_PATH
+    #     choco feature enable -n allowGlobalConfirmation
+    #     git config --global core.autocrlf false
+    #     git clone https://github.com/apache/couchdb-glazier
+    #     &./couchdb-glazier/bin/install_dependencies.ps1
+    #   shell: powershell
+      
+    # - name: Build
+    #   run: |
+    #     &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
+    #     cd $env:WORK_PATH
+    #     git clone https://github.com/apache/couchdb
+    #     cd couchdb
+    #     if ("${{ github.event.inputs.branch_or_tag }}" -ne "") {
+    #       git checkout ${{ github.event.inputs.branch_or_tag }}
+    #     }
+    #     &./configure.ps1 -SpiderMonkeyVersion 91
+    #     function sphinx-build {
+    #         python -m sphinx.cmd.build $args
+    #     }
+    #     make -f Makefile.win
+    #   shell: powershell
+      
+    # - name: Test
+    #   run: |
+    #     &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
+    #     cd $env:WORK_PATH/couchdb
+    #     &.\configure.ps1 -SpiderMonkeyVersion 91
+    #     make -f Makefile.win check
+    #   shell: powershell
+      
+    # - name: Build Installer
+    #   run: |
+    #     &$env:WORK_PATH/couchdb-glazier/bin/shell.ps1
+    #     cd $env:WORK_PATH/couchdb
+    #     &.\configure.ps1 -SpiderMonkeyVersion 91
+    #     make -f Makefile.win release
+    #     cd $env:WORK_PATH
+    #     &couchdb-glazier\bin\build_installer.ps1
+    #   shell: powershell
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4
